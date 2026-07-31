@@ -1,0 +1,34 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: magicstream-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build: ./Server/MagicMovieStream
+    container_name: magicstream-api
+    ports:
+      - "8080:8080"
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/
+      DATABASE_NAME: magicstream
+      SECRET_KEY: change-me-before-deploying
+      SECRET_REFRESH_KEY: change-me-too
+      ALLOWED_ORIGINS: http://localhost:5173
+    volumes:
+      - ./Server/MagicMovieStream/media:/app/media
+    depends_on:
+      mongo:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  mongo_data:
