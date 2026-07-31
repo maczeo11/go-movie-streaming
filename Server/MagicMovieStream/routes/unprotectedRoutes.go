@@ -6,11 +6,17 @@ import (
 	"go.mongodb.org/mongo-driver/v2/mongo"
 )
 
-func SetupUnprotectedRoutes(router *gin.Engine, client *mongo.Client) {
+// SetupUnprotectedRoutes are the routes anyone can hit without a token.
+func SetupUnprotectedRoutes(router *gin.RouterGroup, client *mongo.Client) {
 	router.GET("/movies", controller.GetMovies(client))
+	router.GET("/movie/:imdb_id", controller.GetMovie(client))
 	router.GET("/genres", controller.GetGenres(client))
+}
+
+// SetupAuthRoutes are the routes that create or rotate sessions.
+// They get a stricter rate limit than the public read routes.
+func SetupAuthRoutes(router *gin.RouterGroup, client *mongo.Client) {
 	router.POST("/user", controller.RegisterUser(client))
 	router.POST("/login", controller.LoginUser(client))
-	router.POST("/logout", controller.LogoutHandler(client))
 	router.POST("/refreshtoken", controller.RefreshTokenHandler(client))
 }
