@@ -1,0 +1,21 @@
+meta {
+  name: Logout User
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:8080/logout
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: "{{$env.ACCESS_TOKEN}}"
+}
+
+body:json {
+  {
+    "user_id": "{{$env.USER_ID}}"
+  }
+}

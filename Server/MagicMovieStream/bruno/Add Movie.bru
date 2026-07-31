@@ -1,0 +1,39 @@
+meta {
+  name: Add Movie (Admin)
+  type: http
+  seq: 7
+}
+
+post {
+  url: http://localhost:8080/addmovie
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: "{{$env.ACCESS_TOKEN}}"
+}
+
+body:json {
+  {
+    "imdb_id": "tt{{$randomInt}}",
+    "title": "Test Movie {{$randomInt}}",
+    "poster_path": "https://example.com/poster{{$randomInt}}.jpg",
+    "youtube_id": "dQw4w9WgXcQ",
+    "genre": [
+      {
+        "genre_id": 1,
+        "genre_name": "Sci-Fi"
+      },
+      {
+        "genre_id": 2,
+        "genre_name": "Action"
+      }
+    ],
+    "admin_review": "Great movie!",
+    "ranking": {
+      "ranking_value": 9,
+      "ranking_name": "Highly Recommended"
+    }
+  }
+}

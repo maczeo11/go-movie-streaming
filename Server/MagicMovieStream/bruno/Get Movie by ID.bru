@@ -1,0 +1,15 @@
+meta {
+  name: Get Movie by ID
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:8080/movie/tt0133093
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: "{{$env.ACCESS_TOKEN}}"
+}

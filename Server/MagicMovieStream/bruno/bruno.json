@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Magic Movie Stream API",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

@@ -1,0 +1,15 @@
+meta {
+  name: Refresh Token
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:8080/refreshtoken
+  body: none
+  auth: none
+}
+
+headers {
+  Cookie: refresh_token={{$env.REFRESH_TOKEN}}
+}

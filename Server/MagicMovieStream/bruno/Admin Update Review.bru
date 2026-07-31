@@ -1,0 +1,21 @@
+meta {
+  name: Admin Update Review
+  type: http
+  seq: 9
+}
+
+patch {
+  url: http://localhost:8080/updatereview/tt0133093
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: "{{$env.ACCESS_TOKEN}}"
+}
+
+body:json {
+  {
+    "admin_review": "Masterpiece of cinema!"
+  }
+}
