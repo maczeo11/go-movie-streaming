@@ -1,0 +1,8 @@
+[
+  { "ranking_value": 1, "ranking_name": "Must Watch" },
+  { "ranking_value": 2, "ranking_name": "Highly Recommended" },
+  { "ranking_value": 3, "ranking_name": "Recommended" },
+  { "ranking_value": 4, "ranking_name": "Average" },
+  { "ranking_value": 5, "ranking_name": "Skip It" },
+  { "ranking_value": 999, "ranking_name": "Not Ranked" }
+]

@@ -3,8 +3,8 @@ package middleware
 import (
 	"net/http"
 
-	"github.com/maczeo11/go-movie-streaming/Server/MagicMovieStream/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/maczeo11/go-movie-streaming/Server/MagicMovieStream/utils"
 )
 
 func AuthMiddleware() gin.HandlerFunc {

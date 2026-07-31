@@ -29,9 +29,28 @@ func GetMovies(client *mongo.Client) gin.HandlerFunc {
 		ctx, cancel := context.WithTimeout(c, 100*time.Second)
 		defer cancel()
 
+		page, limit, err := parsePagination(c)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		filter := buildMovieFilter(c.Query("q"), c.Query("genre"))
+
 		var movieCollection *mongo.Collection = database.OpenCollection("movies", client)
 
-		cursor, err := movieCollection.Find(ctx, bson.D{})
+		total, err := movieCollection.CountDocuments(ctx, filter)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to count movies."})
+			return
+		}
+
+		findOptions := options.Find()
+		findOptions.SetSkip((page - 1) * limit)
+		findOptions.SetLimit(limit)
+		findOptions.SetSort(bson.D{{Key: sortField(c.Query("sort")), Value: 1}})
+
+		cursor, err := movieCollection.Find(ctx, filter, findOptions)
 
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch movies."})
@@ -51,7 +70,15 @@ func GetMovies(client *mongo.Client) gin.HandlerFunc {
 			return
 		}
 
-		c.JSON(http.StatusOK, movies)
+		c.JSON(http.StatusOK, gin.H{
+			"data": movies,
+			"meta": gin.H{
+				"page":        page,
+				"limit":       limit,
+				"total":       total,
+				"total_pages": (total + limit - 1) / limit,
+			},
+		})
 	}
 }
 

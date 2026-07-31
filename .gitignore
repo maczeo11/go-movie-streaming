@@ -30,8 +30,9 @@ dist-ssr/
 .DS_Store
 Thumbs.db
 
-# Media (large demo files, seed your own)
-media/
+# Media (only the tiny sample clip is committed, drop your own videos here)
+media/*
+!media/sample.mp4
 
 # Personal editor config
 opencode.jsonc
