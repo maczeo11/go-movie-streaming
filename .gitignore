@@ -32,3 +32,7 @@ Thumbs.db
 
 # Media (large demo files, seed your own)
 media/
+
+# Personal editor config
+opencode.jsonc
+.mcp.json

@@ -1,7 +1,7 @@
 package routes
 
 import (
-	controller "github.com/maczeo11/server-stream/Server/MagicMovieStream/controllers"
+	controller "github.com/maczeo11/go-movie-streaming/Server/MagicMovieStream/controllers"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 )

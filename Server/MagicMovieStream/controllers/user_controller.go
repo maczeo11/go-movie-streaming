@@ -8,9 +8,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"github.com/maczeo11/server-stream/Server/MagicMovieStream/database"
-	"github.com/maczeo11/server-stream/Server/MagicMovieStream/model"
-	"github.com/maczeo11/server-stream/Server/MagicMovieStream/utils"
+	"github.com/maczeo11/go-movie-streaming/Server/MagicMovieStream/database"
+	"github.com/maczeo11/go-movie-streaming/Server/MagicMovieStream/model"
+	"github.com/maczeo11/go-movie-streaming/Server/MagicMovieStream/utils"
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 	"golang.org/x/crypto/bcrypt"

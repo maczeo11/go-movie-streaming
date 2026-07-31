@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/maczeo11/server-stream/Server/MagicMovieStream/database"
+	"github.com/maczeo11/go-movie-streaming/Server/MagicMovieStream/database"
 	"github.com/gin-gonic/gin"
 	jwt "github.com/golang-jwt/jwt/v5"
 	"go.mongodb.org/mongo-driver/v2/bson"

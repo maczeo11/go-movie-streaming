@@ -11,9 +11,9 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"github.com/maczeo11/server-stream/Server/MagicMovieStream/database"
-	"github.com/maczeo11/server-stream/Server/MagicMovieStream/middleware"
-	"github.com/maczeo11/server-stream/Server/MagicMovieStream/routes"
+	"github.com/maczeo11/go-movie-streaming/Server/MagicMovieStream/database"
+	"github.com/maczeo11/go-movie-streaming/Server/MagicMovieStream/middleware"
+	"github.com/maczeo11/go-movie-streaming/Server/MagicMovieStream/routes"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 )
 

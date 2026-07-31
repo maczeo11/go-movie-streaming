@@ -1,4 +1,4 @@
-module github.com/maczeo11/server-stream/Server/MagicMovieStream
+module github.com/maczeo11/go-movie-streaming/Server/MagicMovieStream
 
 go 1.26.3
 
