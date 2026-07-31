@@ -1,9 +1,12 @@
 package utils
 
 import (
+	"net/http"
+	"net/http/httptest"
 	"testing"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	jwt "github.com/golang-jwt/jwt/v5"
 )
 
@@ -67,6 +70,57 @@ func TestExpiredTokenRejected(t *testing.T) {
 	token := createExpiredToken(t, "u1", "USER")
 	if _, err := ValidateToken(token); err == nil {
 		t.Fatal("expired token should be rejected")
+	}
+}
+
+func TestGetAccessTokenFromHeader(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	ctx, _ := gin.CreateTestContext(httptest.NewRecorder())
+	ctx.Request = httptest.NewRequest("GET", "/", nil)
+	ctx.Request.Header.Set("Authorization", "Bearer header-token")
+
+	token, err := GetAccessToken(ctx)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if token != "header-token" {
+		t.Errorf("expected header token, got %q", token)
+	}
+}
+
+func TestGetAccessTokenFromCookie(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	ctx, _ := gin.CreateTestContext(httptest.NewRecorder())
+	ctx.Request = httptest.NewRequest("GET", "/", nil)
+	ctx.Request.AddCookie(&http.Cookie{Name: "access_token", Value: "cookie-token"})
+
+	token, err := GetAccessToken(ctx)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if token != "cookie-token" {
+		t.Errorf("expected cookie token, got %q", token)
+	}
+}
+
+func TestGetAccessTokenMissing(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	ctx, _ := gin.CreateTestContext(httptest.NewRecorder())
+	ctx.Request = httptest.NewRequest("GET", "/", nil)
+
+	if _, err := GetAccessToken(ctx); err == nil {
+		t.Fatal("expected an error when no token is present")
+	}
+}
+
+func TestGetAccessTokenMalformedHeader(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	ctx, _ := gin.CreateTestContext(httptest.NewRecorder())
+	ctx.Request = httptest.NewRequest("GET", "/", nil)
+	ctx.Request.Header.Set("Authorization", "Token not-bearer")
+
+	if _, err := GetAccessToken(ctx); err == nil {
+		t.Fatal("expected an error for a non-Bearer header")
 	}
 }
 

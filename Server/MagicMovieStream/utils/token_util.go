@@ -107,15 +107,21 @@ func UpdateAllTokens(userId, token, refreshToken string, client *mongo.Client) (
 
 func GetAccessToken(c *gin.Context) (string, error) {
 	authHeader := c.Request.Header.Get("Authorization")
-	if authHeader == "" {
-		return "", errors.New("Authorization header is required")
-	}
-
-	tokenString := strings.TrimPrefix(authHeader, "Bearer ")
-	if tokenString == authHeader {
+	if authHeader != "" {
+		tokenString := strings.TrimPrefix(authHeader, "Bearer ")
+		if tokenString != authHeader {
+			return tokenString, nil
+		}
 		return "", errors.New("Bearer token is required")
 	}
-	return tokenString, nil
+
+	// The API also accepts the httpOnly access_token cookie, which is what
+	// the browser client sends on every request.
+	if cookie, err := c.Cookie("access_token"); err == nil && cookie != "" {
+		return cookie, nil
+	}
+
+	return "", errors.New("missing access token (Authorization header or cookie)")
 }
 
 func ValidateToken(tokenString string) (*SignedDetails, error) {
