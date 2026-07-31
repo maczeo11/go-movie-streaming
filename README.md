@@ -150,4 +150,4 @@ paths. The curator rankings in the seed are jokes, not opinions.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+Apache-2.0 — see [LICENSE](LICENSE).
